@@ -26,7 +26,7 @@ void setup(){
     //Encode text into PImage
     textEncode(img, textToEncode);
     //Saves the image
-    img.save(modImageName);
+    img.save("data/"+modImageName);
   } else {
     img = loadImage(modImageName);
     windowResize(img.width,img.height);
