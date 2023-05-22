@@ -1,6 +1,3 @@
-public class Encoder{
-  public void TextEncode(PImage orig, String msg){
+void textEncode(PImage orig, String msg){
     
-  }
-  
 }

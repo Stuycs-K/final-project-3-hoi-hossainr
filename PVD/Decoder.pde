@@ -1,6 +1,3 @@
-public class Decoder{
-  public String TextDecode(PImage obs){
-    
-  }
-  
+String textDecode(PImage obs){
+  return "Yes"; 
 }
