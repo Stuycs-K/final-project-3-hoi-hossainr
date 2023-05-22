@@ -1,10 +1,11 @@
 // Encoding and Decoding text onto image using PVD
-String imageName = "Image.png";
+
+String imageName = "Image1.png";
 String textToEncode = "This is being encoded using PVD encoding thing";
-String modImageName = "modifiedImage.png";
+String modImageName = "modifiedImage1.png";
 //true : encoder mode, needs imageName, textToEncode, and modImageName for saving
-//false: decoder mode, needs modImageName and imageName for saving.
-boolean ENCODETYPE = true;
+//false: decoder mode, needs modImageName, prints text.
+boolean ETYPE = true;
 
 
 // For debugging: Prints all the bits of one byte.
@@ -15,21 +16,27 @@ void printBinary(int x){
   println();
 }
 
-PImage image;
-PImage modImage;
+PImage img;
 
 void setup(){
-  image = loadImage(imageName);
-  size(image.width,image.height);
-  if (ENCODETYPE == true){
-    textEncode(image, textToEncode);
+  if (ETYPE == true){
+    // Load image and set window size
+    img = loadImage(imageName);
+    windowResize(img.width,img.height);
+    //Encode text into PImage
+    textEncode(img, textToEncode);
+    //Saves the image
+    img.save(modImageName);
   } else {
-    modImage = loadImage(modImageName);
-    String decoded = textDecode(modImage);
-  
+    img = loadImage(modImageName);
+    windowResize(img.width,img.height);
+    //Decode image and store text into string
+    String decoded = textDecode(img);
+    //Print text
+    println(decoded);
   }
 }
 
 void draw(){
-  
+  image(img, 0,0);
 }
