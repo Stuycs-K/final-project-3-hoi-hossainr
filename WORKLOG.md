@@ -5,7 +5,7 @@
 | Date | Description | Resources |
 | :---: | :---: | :---: |
 | 5/19 | Research on the PVD algorithm | https://royalsocietypublishing.org/doi/10.1098/rsos.161066 |
-| 5/22 | Started coding on the PVD program | |
+| 5/22 | Started coding on the PVD base code | |
 
 ## Isaac Ho
 
