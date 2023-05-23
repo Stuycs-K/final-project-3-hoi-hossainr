@@ -7,15 +7,6 @@ String modImageName = "modifiedImage1.png";
 //false: decoder mode, needs modImageName, prints text.
 boolean ETYPE = true;
 
-
-// For debugging: Prints all the bits of one byte.
-void printBinary(int x){
-  for(int i=7; i>=0;i--){
-    print((x>>i)&1);
-  }
-  println();
-}
-
 PImage img;
 
 void setup(){
