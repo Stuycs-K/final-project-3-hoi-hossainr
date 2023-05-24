@@ -17,7 +17,7 @@ void setup(){
     //Encode text into PImage
     textEncode(img, textToEncode);
     //Saves the image
-    img.save("data/"+modImageName);
+    img.save(modImageName);
   } else {
     img = loadImage(modImageName);
     windowResize(img.width,img.height);
@@ -30,4 +30,9 @@ void setup(){
 
 void draw(){
   image(img, 0,0);
+}
+
+// Calculates the base-2 logarithm of a number
+float log2 (int x) {
+  return (log(x) / log(2));
 }
