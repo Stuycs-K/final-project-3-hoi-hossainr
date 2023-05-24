@@ -1,14 +1,22 @@
 Note: this initial implementation is for grayscale images
-
 Pseudocode steps:
 
 Encode
 - Image is split into blocks of two pixels each
 - For each block of two
 	- compute the difference (diff) between their intensity values
-	- size of encoding in block determined by formula
-		- t = [logbase2(upper - lower + 1)]
-	- decimal value (td) = bit sequence of length t -> decimal
+	- ranges of possible differences
+		- #: (upper#, lower#)
+		- 1: (0, 7)
+		- 2: (8, 15)
+		- 3: (16, 31)
+		- 4: (32, 63)
+		- 5: (64, 127)
+		- 6: (128, 255)
+	- size of encoding in block determined by formula, where upper# and lower# correspond to the range of possible differences diff falls into
+		- t = [logbase2(upper# - lower# + 1)]
+	- check that the additional diff encoding will not cause over/underflow on pixels
+	- decimal value (td) = bit sequence -> decimal
 	- newdiff = td + lower
 	- modified pixel values calculated as follows (newpixel1, newpixel2)
 		- m = abs(newdiff - diff)
@@ -24,3 +32,10 @@ Encode
 	- repeat with new blocks until message is fully encoded
 
 Decode
+- Image is split into blocks of two pixels each
+- For each block of two
+	- compute the difference (diffp) between their intensity values
+	- check whether block would have been ruled out for possible over/underflow on pixels
+	- extract data with equation
+		- bit sequence = abs(diffp - lower#)
+	- repeat with new blocks until the message is fully decoded
