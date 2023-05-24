@@ -1,3 +1,10 @@
+
+public static char ENCODE = 0;
+public static char DECODE = 1;
+public static char GRAYSCALE = 0;
+public static char COLOR = 1;
+
+
 // For debugging: Prints all the bits of one byte.
 void printBinary(int x){
   for(int i=7; i>=0;i--){
