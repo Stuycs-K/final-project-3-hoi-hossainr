@@ -1,0 +1,26 @@
+Note: this initial implementation is for grayscale images
+
+Pseudocode steps:
+
+Encode
+- Image is split into blocks of two pixels each
+- For each block of two
+	- compute the difference (diff) between their intensity values
+	- size of encoding in block determined by formula
+		- t = [logbase2(upper - lower + 1)]
+	- decimal value (td) = bit sequence -> decimal
+	- newdiff = td + lower
+	- modified pixel values calculated as follows (newpixel1, newpixel2)
+		- m = abs(newdiff - diff)
+		- if (pixel1 >= pixel2) and (newdiff > diff)
+			- (pixel1 + (m/2), pixel2 - (m/2))
+		- if (pixel1 < pixel2) and (newdiff > diff)
+			- (pixel1 - (m/2), pixel2 + (m/2))
+		- if (pixel1 >= pixel2) and (newdiff <= diff)
+			- (pixel1 - (m/2), pixel2 + (m/2))
+		- if (pixel1 < pixel2) and (newdiff <= diff)
+			- (pixel1 + (m/2), pixel2 - (m/2))
+	- pixel1 and pixel2 are replaced by stego pixels newpixel1 and newpixel2
+	- repeat with new blocks until message is fully encoded
+
+Decode
