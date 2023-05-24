@@ -1,3 +1,7 @@
-void textEncode(PImage orig, String msg){
+void textEncodeGrayscale(PImage orig, String msg){
+    
+}
+
+void textEncodeColor(PImage orig, String msg){
     
 }
