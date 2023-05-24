@@ -8,7 +8,7 @@ Encode
 	- compute the difference (diff) between their intensity values
 	- size of encoding in block determined by formula
 		- t = [logbase2(upper - lower + 1)]
-	- decimal value (td) = bit sequence -> decimal
+	- decimal value (td) = bit sequence of length t -> decimal
 	- newdiff = td + lower
 	- modified pixel values calculated as follows (newpixel1, newpixel2)
 		- m = abs(newdiff - diff)
