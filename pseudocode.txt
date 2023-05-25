@@ -16,7 +16,16 @@ Encode
 	- size of encoding in block determined by formula (bits#), where upper# and lower# correspond to the range of possible differences diff falls into
 		- t = [logbase2(upper# - lower# + 1)]
 		- ex: diff of 40 -> logbase2(63-32+1) = 5 bits
-	- check that the additional diff encoding will not cause over/underflow on pixels
+	- check that the additional diff encoding will not cause over/underflow on pixels based on maximum possible shift based on this range of diffs
+		- if yes over/underflow encode nothing, move to next block
+			- ex: block has values (240, 250)
+			- diff = 10 -> range2 -> 3 bits encode -> maximum change of 8
+			- 255 - 250 = 6 < 8 -> possible overflow
+		- if no over/underflow, continue encoding
+			- ex: block has values (150, 170)
+			- diff = 20 -> range3 -> 4 bits encode -> maximum change of 16
+			- 255 - 170 = 85 > 16 -> no possible overflow
+			- 150 - 0 = 150 > 16 -> no possible underflow 
 	- bit sequence of text as decimal value (td)
 	- newdiff = td + lower
 	- modified pixel values calculated as follows (newpixel1, newpixel2)
