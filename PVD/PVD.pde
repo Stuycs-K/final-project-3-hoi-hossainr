@@ -10,7 +10,7 @@ char MODE = ENCODE;
 
 //GRAYSCALE: encode using grayscale pixel method
 //COLOR    : encode using colored pixel method
-char ETYPE = GRAYSCALE;
+char IMGTYPE = GRAYSCALE;
 
 PImage img;
 
@@ -20,9 +20,9 @@ void setup(){
     img = loadImage(imageName);
     windowResize(img.width,img.height);
     //Encode text into PImage
-    if (ETYPE == GRAYSCALE){
+    if (IMGTYPE == GRAYSCALE){
       textEncodeGrayscale(img, textToEncode);
-    }else {
+    } else {
       textEncodeColor(img, textToEncode);
     }
     //Saves the image
@@ -32,9 +32,9 @@ void setup(){
     windowResize(img.width,img.height);
     //Decode image and store text into string
     String decoded;
-    if (ETYPE == GRAYSCALE){
+    if (IMGTYPE == GRAYSCALE){
       decoded = textDecodeGrayscale(img);
-    }else {
+    } else {
       decoded = textDecodeColor(img);
     }
     //Print text
@@ -45,3 +45,9 @@ void setup(){
 void draw(){
   image(img, 0,0);
 }
+
+/*
+float log2 (int x) {
+  return (log(x) / log(2));
+}
+*/
