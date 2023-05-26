@@ -8,6 +8,7 @@
 | 5/22 | Started coding on the PVD base code | |
 | 5/23 | Research on PImage grayscale images | https://web.stanford.edu/class/cs101/image-6-grayscale.html https://processing.org/reference/filter_.html |
 | 5/24 | Finishing up pseudocode | |
+| 5/25 | Worked on grayscale decode | |
 
 ## Isaac Ho
 
@@ -17,3 +18,4 @@
 | 5/22 | Added more images for encoding data | |
 | 5/23 | Prepared pseudocode for PVD encoding | |
 | 5/24 | Finishing up pseudocode | |
+| 5/25 | Worked on grayscale encode | | 
