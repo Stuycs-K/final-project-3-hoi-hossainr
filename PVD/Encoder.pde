@@ -4,33 +4,32 @@ public static int[] ranges = {0, 8, 16, 32, 64, 128, 256};
 public static int[] bitSize = {3, 3, 4, 5, 6, 7};
 
 void textEncodeGrayscale(PImage orig, String msg){
-  int diff = 0;
-  int large = 0;
-  int small = 0;
-  int blockRange = 0;
-  IntList msgB = new IntList();
-  int[] messageBits;
+  int diff, newDiff, large, small, blockRange, msgInd = 0, 0, 0, 0, 0, 0;
+  float m = 0.0;
+  IntList messageBits = new IntList();
+  int[] msgBits;
   
   for (int i=0; i<msg.length(); i++) {
     for (int j=7; j>=0; j--) {
-      msgB.append((msg.charAt(i)>>j)&1);
+      messageBits.append((msg.charAt(i)>>j)&1);
     }
   }
-  messageBits = msgB.toArray();
+  msgBits = messageBits.toArray();
   orig.filter(GRAY);
-  for (int i=0; i<(orig.pixels).length-1; i+=2) {
-    diff = abs((orig.pixels[i]&255) - (orig.pixels[i+1]&255));
-    if (((orig.pixels[i])&255) > ((orig.pixels[i+1])&255)) {
-      large = i;
-      small = i+1;
+  
+  for (int p=0; p<(orig.pixels).length-1; p+=2) {
+    if (((orig.pixels[p])&255) >= ((orig.pixels[p+1])&255)) {
+      large = p;
+      small = p+1;
     } else {
-      large = i+1;
-      small = i;
+      large = p+1;
+      small = p;
     }
+    diff = (orig.pixels[large]&255) - (orig.pixels[small]&255);
     
-    for (int j=0; j<ranges.length; j++) {
-      if (ranges[j] > diff) {
-        blockRange = j-1;
+    for (int k=0; j<ranges.length; k++) {
+      if (ranges[k] > diff) {
+        blockRange = k-1;
         break;
       }
     }
@@ -40,6 +39,30 @@ void textEncodeGrayscale(PImage orig, String msg){
       continue;
     }
     
+    newDiff = ranges[blockRange];
+    for (int l=bitSize[blockRange]; l>=0; l--) {
+      if (msgInd < msgBits.length) {
+        newDiff += msgBits[msgInd]*pow(2, l);
+        msgInd++;
+      } else {
+        newDiff = newDiff | ~(1 << l);
+      }
+    }
+    
+    m = float(abs(newDiff - diff));
+    if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff > diff)) {
+      orig.pixels[p] += ceil(m/2);
+      orig.pixels[p+1] -= floor(m/2);
+    } else if ((orig.pixels[p] < orig.pixels[p+1]) && (newDiff > diff)) {
+      orig.pixels[p] -= floor(m/2);
+      orig.pixels[p+1] += ceil(m/2);
+    } else if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff <= diff)) {
+      orig.pixels[p] -= ceil(m/2);
+      orig.pixels[p+1] += floor(m/2);
+    } else {
+      orig.pixels[p] += ceil(m/2);
+      orig.pixels[p+1] -= floor(m/2);
+    }
   }
   orig.updatePixels();
 }

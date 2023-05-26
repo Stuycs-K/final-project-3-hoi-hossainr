@@ -27,17 +27,18 @@ Encode
 			- 255 - 170 = 85 > 16 -> no possible overflow
 			- 150 - 0 = 150 > 16 -> no possible underflow 
 	- bit sequence of text as decimal value (td)
-	- newdiff = td + lower
+	- newdiff = td + lower#
 	- modified pixel values calculated as follows (newpixel1, newpixel2)
-		- m = abs(newdiff - diff)
+		- m = abs(newdiff - diff); needs to be floats for this division
+		- some rounding; floor() goes down, ceil() goes up
 		- if (pixel1 >= pixel2) and (newdiff > diff)
-			- (pixel1 + (m/2), pixel2 - (m/2))
+			- (pixel1 + (m/2)rndUp, pixel2 - (m/2)rndDown)
 		- if (pixel1 < pixel2) and (newdiff > diff)
-			- (pixel1 - (m/2), pixel2 + (m/2))
+			- (pixel1 - (m/2)rndDown, pixel2 + (m/2)rndUp)
 		- if (pixel1 >= pixel2) and (newdiff <= diff)
-			- (pixel1 - (m/2), pixel2 + (m/2))
+			- (pixel1 - (m/2)rndUp, pixel2 + (m/2)rndDown)
 		- if (pixel1 < pixel2) and (newdiff <= diff)
-			- (pixel1 + (m/2), pixel2 - (m/2))
+			- (pixel1 + (m/2)rndUp, pixel2 - (m/2)rndDown)
 	- pixel1 and pixel2 are replaced by stego pixels newpixel1 and newpixel2
 	- repeat with next block 
 		- if message is fully encoded, encode rest of the pixels with zeroes
