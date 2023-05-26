@@ -17,10 +17,10 @@ void textEncodeGrayscale(PImage orig, String msg){
   messageBits = msgB.toArray();
   
   orig.filter(GRAY);
-  for (int i=0; i<pixels.length-1; i+=2) {
-    diff = abs(pixels[i] - pixels[i+1]);
+  for (int i=0; i<(orig.pixels).length-1; i+=2) {
+    diff = abs(orig.pixels[i] - orig.pixels[i+1]);
     
-    if ((pixels[i]&255) > (pixels[i+1]&255)) {
+    if (((orig.pixels[i])&255) > ((orig.pixels[i+1])&255)) {
       large = i;
       small = i+1;
     } else {
