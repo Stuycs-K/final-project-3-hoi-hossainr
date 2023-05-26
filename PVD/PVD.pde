@@ -1,8 +1,8 @@
 // Encoding and Decoding text onto image using PVD
 
-String imageName = "Image1.png";
+String imageName = "ducks.png";
 String textToEncode = "This is being encoded using PVD encoding thing";
-String modImageName = "modifiedImage1.png";
+String modImageName = "modifiedducks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
 //DECODE: decoder mode, needs modImageName, prints text.
