@@ -1,7 +1,9 @@
 String textDecodeGrayscale(PImage obs){
   obs.loadPixels();
-  for(int i = 0; i < (obs.pixels).length; i+=2){
-    // RGB values are the same in grayscale images
+  int n = (obs.pixels).length;
+  char curChar = 0;
+  int curCharShift = 7;
+  for(int i = 0; i < n-1; i+=2){
     
   }
   return "Yes"; 
@@ -10,5 +12,3 @@ String textDecodeGrayscale(PImage obs){
 String textDecodeColor(PImage obs){
   return "Yes"; 
 }
-
-    //StringBuilder bits = new StringBuilder(bytes.length*8);

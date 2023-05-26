@@ -4,7 +4,7 @@ void textEncodeGrayscale(PImage orig, String msg){
   int diff = 0;
   int large = 0;
   int small = 0;
-  int[] ranges = [ 0, 8, 16, 32, 64, 128, 256 ];
+  int[] ranges = {0, 8, 16, 32, 64, 128, 256};
   int blockRange = 0;
   IntList msgB = new IntList();
   int[] messageBits;
@@ -16,6 +16,7 @@ void textEncodeGrayscale(PImage orig, String msg){
   }
   messageBits = msgB.toArray();
   
+  orig.filter(GRAY);
   for (int i=0; i<pixels.length-1; i+=2) {
     diff = abs(pixels[i] - pixels[i+1]);
     
@@ -39,7 +40,7 @@ void textEncodeGrayscale(PImage orig, String msg){
       continue;
     }
     
-    
+    orig.updatePixels();
   }
 }
 

@@ -45,9 +45,3 @@ void setup(){
 void draw(){
   image(img, 0,0);
 }
-
-/*
-float log2 (int x) {
-  return (log(x) / log(2));
-}
-*/
