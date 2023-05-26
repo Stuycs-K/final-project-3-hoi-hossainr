@@ -16,6 +16,8 @@ void textEncodeGrayscale(PImage orig, String msg){
       msgB.append((msg.charAt(i)>>j)&1);
     }
   }
+  
+  (int)(a/2)
   messageBits = msgB.toArray();
   orig.filter(GRAY);
   for (int i=0; i<(orig.pixels).length-1; i+=2) {
