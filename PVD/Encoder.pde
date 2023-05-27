@@ -1,6 +1,3 @@
-public static int[] ranges = {0, 8, 16, 32, 64, 128, 256};
-public static int[] bitSize = {3, 3, 4, 5, 6, 7};
-
 void textEncodeGrayscale(PImage orig, String msg){
   int diff = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
   float m = 0;
@@ -62,7 +59,6 @@ void textEncodeGrayscale(PImage orig, String msg){
     }
     orig.pixels[p] = (255 << 24) + (pix1 << 16) + (pix1 << 8) + pix1;
     orig.pixels[p+1] = (255 << 24) + (pix2 << 16) + (pix2 << 8) + pix2;
-    
   }
   orig.updatePixels();
 }
@@ -71,4 +67,3 @@ void textEncodeColor(PImage orig, String msg){
   //color version has overlapping blocks in the color channels, instead of neighboring pixels
   //1 block in RG, 1 block GB
 }
->>>>>>> b1de71a40e0a8c905307a892fd706fe59f829335

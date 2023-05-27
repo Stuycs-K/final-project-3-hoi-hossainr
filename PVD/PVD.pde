@@ -1,6 +1,4 @@
 // Encoding and Decoding text onto image using PVD
-import java.util.Arrays;
-import java.util.ArrayList;
 
 // Name of file that is being encoded
 String imageName = "ducks.png";
