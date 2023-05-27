@@ -11,7 +11,6 @@ void textEncodeGrayscale(PImage orig, String msg){
   }
   msgBits = messageBits.toArray();
   orig.filter(GRAY);
-  
   for (int p=0; p<(orig.pixels).length-1; p+=2) {
     if (((orig.pixels[p])&255) >= ((orig.pixels[p+1])&255)) {
       large = p;
@@ -33,12 +32,11 @@ void textEncodeGrayscale(PImage orig, String msg){
       continue;
     }
     newDiff = ranges[blockRange];
-    for (int l=bitSize[blockRange]; l>=0; l--) {
-      if (msgInd < msgBits.length) {
-        newDiff += (msgBits[msgInd] << l);
+    for (int ls=bitSize[blockRange]-1; ls>=0; ls--) {
+      newDiff &= ~(1 << ls);
+      if (msgInd < msgBits.length){
+        newDiff |= ((msgBits[msgInd] << ls) & (1 << ls) );
         msgInd++;
-      } else {
-        newDiff = newDiff | ~(1 << l);
       }
     }
     int pix1 = orig.pixels[p] >> 16 & 0xFF;
