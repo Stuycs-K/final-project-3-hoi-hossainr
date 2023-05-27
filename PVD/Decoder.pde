@@ -26,8 +26,8 @@ String textDecodeGrayscale(PImage obs){
       }
     }
     
-    if (((255 - obs.pixels[large]) < (ranges[blockRange+1] - ranges[blockRange]))
-       || ((obs.pixels[small]) < (ranges[blockRange+1] - ranges[blockRange]))) {
+    if (((255 - (obs.pixels[large]&255)) < (ranges[blockRange+1] - ranges[blockRange]))
+       || ((obs.pixels[small]&255) < (ranges[blockRange+1] - ranges[blockRange]))) {
       continue;
     }
     for (int j=bitSize[blockRange]-1; j>=0; j--) {
@@ -35,7 +35,8 @@ String textDecodeGrayscale(PImage obs){
       if (ccShift == 7) {
         ccShift = 0;
         if (curChar == 0) break;
-        //text.append(curChar);
+        println(curChar);
+        text.append(curChar);
       } else {ccShift++;}
        //msgB.append((diff>>j)&1);
     }
@@ -48,4 +49,3 @@ String textDecodeGrayscale(PImage obs){
 String textDecodeColor(PImage obs){
   return "Yes"; 
 }
->>>>>>> 6016483b5777f4d376c302c5cd9eac6418abf74d
