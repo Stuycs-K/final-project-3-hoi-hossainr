@@ -33,12 +33,10 @@ void textEncodeGrayscale(PImage orig, String msg){
         break;
       }
     }
-    
-    if (((255 - orig.pixels[large]) < (ranges[blockRange+1] - ranges[blockRange]))
-       || ((orig.pixels[small]) < (ranges[blockRange+1] - ranges[blockRange]))) {
+    if (((255 - (orig.pixels[large]&255)) < (ranges[blockRange+1] - ranges[blockRange]))
+       || ((orig.pixels[small]&255) < (ranges[blockRange+1] - ranges[blockRange]))) {
       continue;
     }
-    
     newDiff = ranges[blockRange];
     for (int l=bitSize[blockRange]; l>=0; l--) {
       if (msgInd < msgBits.length) {
@@ -62,6 +60,7 @@ void textEncodeGrayscale(PImage orig, String msg){
     } else {
       orig.pixels[p] += ceil(m/2);
       orig.pixels[p+1] -= floor(m/2);
+      
     }
   }
   orig.updatePixels();
