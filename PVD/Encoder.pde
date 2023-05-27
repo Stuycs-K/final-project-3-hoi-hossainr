@@ -5,7 +5,7 @@ public static int[] bitSize = {3, 3, 4, 5, 6, 7};
 
 void textEncodeGrayscale(PImage orig, String msg){
   int diff = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
-  float m = 0.0;
+  int m = 0;
   IntList messageBits = new IntList();
   int[] msgBits;
   
@@ -46,22 +46,25 @@ void textEncodeGrayscale(PImage orig, String msg){
         newDiff = newDiff | ~(1 << l);
       }
     }
-    
-    m = float(abs(newDiff - diff));
+    int pix1 = orig.pixels[p] >> 16 & 0xFF;
+    int pix2 = orig.pixels[p+1] >> 16 & 0xFF;
+    m = abs(newDiff - diff);
     if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff > diff)) {
-      orig.pixels[p] += ceil(m/2);
-      orig.pixels[p+1] -= floor(m/2);
+      pix1 += ceil(m/2);
+      pix2 -= floor(m/2);
     } else if ((orig.pixels[p] < orig.pixels[p+1]) && (newDiff > diff)) {
-      orig.pixels[p] -= floor(m/2);
-      orig.pixels[p+1] += ceil(m/2);
+      pix1 -= floor(m/2);
+      pix2 += ceil(m/2);
     } else if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff <= diff)) {
-      orig.pixels[p] -= ceil(m/2);
-      orig.pixels[p+1] += floor(m/2);
+      pix1 -= ceil(m/2);
+      pix2 += floor(m/2);
     } else {
-      orig.pixels[p] += ceil(m/2);
-      orig.pixels[p+1] -= floor(m/2);
-      
+      pix1 += ceil(m/2);
+      pix2 -= floor(m/2);
     }
+    orig.pixels[p] = color(pix1,pix1,pix1);
+    orig.pixels[p+1] = color(pix2,pix2,pix2);
+    
   }
   orig.updatePixels();
 }
