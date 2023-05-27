@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public static int[] ranges = {0, 8, 16, 32, 64, 128, 256};
 public static int[] bitSize = {3, 3, 4, 5, 6, 7};
 
