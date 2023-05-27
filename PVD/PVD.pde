@@ -9,7 +9,7 @@ String modImageName = "modifiedducks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
 //DECODE: decoder mode, needs modImageName, prints text.
-char MODE = DECODE;
+char MODE = ENCODE;
 
 //GRAYSCALE: encode using grayscale pixel method
 //COLOR    : encode using colored pixel method
@@ -30,7 +30,7 @@ void setup(){
     }
     //Saves the image
     img.save("data/"+modImageName);
-  } else {
+  } else if (MODE == DECODE){
     img = loadImage(modImageName);
     windowResize(img.width,img.height);
     //Decode image and store text into string
