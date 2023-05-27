@@ -4,7 +4,7 @@ public static int[] ranges = {0, 8, 16, 32, 64, 128, 256};
 public static int[] bitSize = {3, 3, 4, 5, 6, 7};
 
 void textEncodeGrayscale(PImage orig, String msg){
-  int diff = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
+  int diff, newDiff, large, small, blockRange, msgInd = 0, 0, 0, 0, 0, 0;
   float m = 0.0;
   IntList messageBits = new IntList();
   int[] msgBits;
@@ -27,16 +27,18 @@ void textEncodeGrayscale(PImage orig, String msg){
     }
     diff = (orig.pixels[large]&255) - (orig.pixels[small]&255);
     
-    for (int k=0; k<ranges.length; k++) {
+    for (int k=0; j<ranges.length; k++) {
       if (ranges[k] > diff) {
         blockRange = k-1;
         break;
       }
     }
-    if (((255 - (orig.pixels[large]&255)) < (ranges[blockRange+1] - ranges[blockRange]))
-       || ((orig.pixels[small]&255) < (ranges[blockRange+1] - ranges[blockRange]))) {
+    
+    if (((255 - orig.pixels[large]) < (ranges[blockRange+1] - ranges[blockRange]))
+       || ((orig.pixels[small]) < (ranges[blockRange+1] - ranges[blockRange]))) {
       continue;
     }
+    
     newDiff = ranges[blockRange];
     for (int l=bitSize[blockRange]; l>=0; l--) {
       if (msgInd < msgBits.length) {
@@ -49,18 +51,17 @@ void textEncodeGrayscale(PImage orig, String msg){
     
     m = float(abs(newDiff - diff));
     if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff > diff)) {
-      orig.pixels[p] += ceil(m/2);
-      orig.pixels[p+1] -= floor(m/2);
+      orig.pixels[p] += int(ceil(m/2.0));
+      orig.pixels[p+1] -= int(floor(m/2.0));
     } else if ((orig.pixels[p] < orig.pixels[p+1]) && (newDiff > diff)) {
-      orig.pixels[p] -= floor(m/2);
-      orig.pixels[p+1] += ceil(m/2);
+      orig.pixels[p] -= int(floor(m/2.0));
+      orig.pixels[p+1] += int(ceil(m/2.0));
     } else if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff <= diff)) {
-      orig.pixels[p] -= ceil(m/2);
-      orig.pixels[p+1] += floor(m/2);
-    } else {
-      orig.pixels[p] += ceil(m/2);
-      orig.pixels[p+1] -= floor(m/2);
-      
+      orig.pixels[p] -= int(ceil(m/2.0));
+      orig.pixels[p+1] += int(floor(m/2.0));
+    } else if ((orig.pixels[p] < orig.pixels[p+1]) && (newDiff <= diff)) {
+      orig.pixels[p] += int(ceil(m/2.0));
+      orig.pixels[p+1] -= int(floor(m/2.0));
     }
   }
   orig.updatePixels();
