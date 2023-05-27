@@ -1,12 +1,12 @@
 // Encoding and Decoding text onto image using PVD
-import java.util.Arrays;
+import java.util.Array;
 
 // Name of file that is being encoded
-String imageName = "ducks.png";
+String imageName = "ducks_gray.png";
 // Message to encode
 String textToEncode = "This is being encoded using PVD encoding thing";
 // Name of file that has encoded text
-String modImageName = "modifiedducks.png";
+String modImageName = "modifiedDucks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
 //DECODE: decoder mode, needs modImageName, prints text.

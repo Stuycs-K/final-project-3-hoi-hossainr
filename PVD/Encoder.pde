@@ -1,3 +1,6 @@
+import java.util.Array;
+import java.util.ArrayList;
+
 public static int[] ranges = {0, 8, 16, 32, 64, 128, 256};
 public static int[] bitSize = {3, 3, 4, 5, 6, 7};
 
@@ -13,7 +16,6 @@ void textEncodeGrayscale(PImage orig, String msg){
     }
   }
   msgBits = messageBits.toArray();
-  orig.filter(GRAY);
   
   for (int p=0; p<(orig.pixels).length-1; p+=2) {
     if (((orig.pixels[p])&255) >= ((orig.pixels[p+1])&255)) {
@@ -32,8 +34,8 @@ void textEncodeGrayscale(PImage orig, String msg){
       }
     }
     
-    if (((255 - orig.pixels[large]) < (ranges[blockRange+1] - ranges[blockRange]))
-       || ((orig.pixels[small]) < (ranges[blockRange+1] - ranges[blockRange]))) {
+    if (((255 - (orig.pixels[large]&255)) < (ranges[blockRange+1] - ranges[blockRange]))
+       || ((orig.pixels[small]&255) < (ranges[blockRange+1] - ranges[blockRange]))) {
       continue;
     }
     
