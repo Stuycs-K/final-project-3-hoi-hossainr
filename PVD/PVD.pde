@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 // Name of file that is being encoded
-String imageName = "ducks_gray.png";
+String imageName = "ducks.png";
 // Message to encode
 String textToEncode = "This is being encoded using PVD encoding thing";
 // Name of file that has encoded text
