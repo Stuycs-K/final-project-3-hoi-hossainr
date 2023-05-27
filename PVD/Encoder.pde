@@ -51,17 +51,17 @@ void textEncodeGrayscale(PImage orig, String msg){
     
     m = float(abs(newDiff - diff));
     if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff > diff)) {
-      orig.pixels[p] += ceil(m/2);
-      orig.pixels[p+1] -= floor(m/2);
+      orig.pixels[p] += int(ceil(m/2.0));
+      orig.pixels[p+1] -= int(floor(m/2.0));
     } else if ((orig.pixels[p] < orig.pixels[p+1]) && (newDiff > diff)) {
-      orig.pixels[p] -= floor(m/2);
-      orig.pixels[p+1] += ceil(m/2);
+      orig.pixels[p] -= int(floor(m/2.0));
+      orig.pixels[p+1] += int(ceil(m/2.0));
     } else if ((orig.pixels[p] >= orig.pixels[p+1]) && (newDiff <= diff)) {
-      orig.pixels[p] -= ceil(m/2);
-      orig.pixels[p+1] += floor(m/2);
-    } else {
-      orig.pixels[p] += ceil(m/2);
-      orig.pixels[p+1] -= floor(m/2);
+      orig.pixels[p] -= int(ceil(m/2.0));
+      orig.pixels[p+1] += int(floor(m/2.0));
+    } else if ((orig.pixels[p] < orig.pixels[p+1]) && (newDiff <= diff)) {
+      orig.pixels[p] += int(ceil(m/2.0));
+      orig.pixels[p+1] -= int(floor(m/2.0));
     }
   }
   orig.updatePixels();

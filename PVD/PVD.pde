@@ -27,7 +27,7 @@ void setup(){
     }
     //Saves the image
     img.save("data/"+modImageName);
-  } else {
+  } else if (MODE == DECODE) {
     img = loadImage(modImageName);
     windowResize(img.width,img.height);
     //Decode image and store text into string

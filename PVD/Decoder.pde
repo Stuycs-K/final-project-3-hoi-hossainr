@@ -1,5 +1,6 @@
 // ranges and bitsize declared in Encoder.pde
 
+/*
 String textDecodeGrayscale(PImage obs){
   obs.loadPixels();
   int n = (obs.pixels).length;
@@ -48,3 +49,4 @@ String textDecodeGrayscale(PImage obs){
 String textDecodeColor(PImage obs){
   return "Yes"; 
 }
+/*
