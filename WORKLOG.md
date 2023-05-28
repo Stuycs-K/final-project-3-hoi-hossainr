@@ -20,3 +20,4 @@
 | 5/23 | Prepared pseudocode for PVD encoding | |
 | 5/24 | Finishing up pseudocode | |
 | 5/25 | Worked on grayscale encode | |
+| 5/27 | Fixed bugs in encode | |
