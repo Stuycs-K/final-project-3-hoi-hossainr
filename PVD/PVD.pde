@@ -4,7 +4,7 @@
 String imageName = "ducks.png";
 // Message to encode
 String textToEncode = "This is being encoded using PVD encoding thing";
-// Name of file that has encoded text
+// Name of file that has or will have encoded text
 String modImageName = "modifiedDucks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
