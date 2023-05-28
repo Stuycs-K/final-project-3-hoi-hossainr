@@ -20,7 +20,7 @@ On processing open PVD.pde, and change setting variables as needed (lines 3-16):
 String imageName = "ducks.png";
 // Message to encode
 String textToEncode = "This is being encoded using PVD encoding thing";
-// Name of file that has encoded text
+// Name of file that has or will have encoded text
 String modImageName = "modifiedducks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
