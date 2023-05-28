@@ -9,7 +9,7 @@ String modImageName = "modifiedDucks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
 //DECODE: decoder mode, needs modImageName, prints text.
-char MODE = ENCODE;
+char MODE = DECODE;
 
 //GRAYSCALE: encode using grayscale pixel method
 //COLOR    : encode using colored pixel method
