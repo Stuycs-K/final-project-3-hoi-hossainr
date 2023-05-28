@@ -9,7 +9,7 @@
 | 5/23 | Research on PImage grayscale images | https://web.stanford.edu/class/cs101/image-6-grayscale.html https://processing.org/reference/filter_.html |
 | 5/24 | Finishing up pseudocode | |
 | 5/25 | Worked on grayscale decode | |
-| 5/27 | Finished decode and fixed bugs | |
+| 5/27 | Finished decode, fixed some bugs | |
 
 ## Isaac Ho
 
