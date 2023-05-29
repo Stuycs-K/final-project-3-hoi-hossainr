@@ -1,3 +1,3 @@
 # Image Stenography THM Writeup
 
-### Link: tryhackme.com/jr/imagestenography
+### Link: https://tryhackme.com/jr/imagestenography
