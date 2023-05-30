@@ -1,3 +1,4 @@
+
 void textEncodeGrayscale(PImage orig, String msg){
   // Initialize variables
   int diff = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
@@ -40,7 +41,7 @@ void textEncodeGrayscale(PImage orig, String msg){
       }
     }
     
-    // Skip if the highest addable value or subtracable value cause over/under flow on any of the two pixels.
+    // Skip if the highest addable/removable value cause over/under flow on any of the two pixels.
     if (((255 - large) < (ranges[blockRange+1] - ranges[blockRange]))
        || (small < (ranges[blockRange+1] - ranges[blockRange]))) {
       continue;
@@ -48,7 +49,9 @@ void textEncodeGrayscale(PImage orig, String msg){
     // Calculate the new difference by using lower range and encoding data onto it.
     newDiff = ranges[blockRange];
     for (int ls=bitSize[blockRange]-1; ls>=0; ls--) {
+      // Sets bit in location ls to zero
       newDiff &= ~(1 << ls);
+      // Replace bit with the message bits if there are any left to encode.
       if (msgInd < msgBits.length){
         newDiff |= ((msgBits[msgInd] << ls) & (1 << ls) );
         msgInd++;
@@ -73,7 +76,6 @@ void textEncodeGrayscale(PImage orig, String msg){
     // Change pixel values
     orig.pixels[p] = (255 << 24) + (pix1 << 16) + (pix1 << 8) + pix1;
     orig.pixels[p+1] = (255 << 24) + (pix2 << 16) + (pix2 << 8) + pix2;
-
   }
   // Update pixel array onto PImage
   orig.updatePixels();
@@ -82,4 +84,24 @@ void textEncodeGrayscale(PImage orig, String msg){
 void textEncodeColor(PImage orig, String msg){
   //color version has overlapping blocks in the color channels, instead of neighboring pixels
   //1 block in RG, 1 block GB
+  IntList messageBits = new IntList();  
+  int[] msgBits;
+  
+  for (int i=0; i<msg.length(); i++) {
+    for (int j=7; j>=0; j--) {
+      messageBits.append((msg.charAt(i)>>j)&1);
+    }
+  }
+  msgBits = messageBits.toArray();
+  messageBits.clear();
+  
+  // initialize values for red-green
+  
+  // initialize values for green-blue
+  
+  // go through every pixel
+  for (int p=0; p<(orig.pixels).length; p++) {
+  
+  
+  }
 }

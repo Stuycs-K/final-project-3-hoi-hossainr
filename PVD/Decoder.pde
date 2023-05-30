@@ -1,13 +1,13 @@
+
 String textDecodeGrayscale(PImage obs){
   // Load pixel array
   obs.loadPixels();
   // Initialize variables
-  int n = (obs.pixels).length/4;
   int blockRange = 0, large = 0, small = 0, curChar = 0, ccShift = 0, diff = 0;  
   StringBuilder text = new StringBuilder(" ");
   
   // Go through pixel array
-  for(int i = 0; i < n-1; i+=2){
+  for(int i = 0; i < ((obs.pixels).length)-1; i+=2){
     int pix1 = (obs.pixels[i])&255;
     int pix2 = (obs.pixels[i+1])&255;
     // Determine the larger and smaller pixels.
@@ -47,7 +47,6 @@ String textDecodeGrayscale(PImage obs){
   }
   return text.toString(); 
 }
-
 
 String textDecodeColor(PImage obs){
   return "Yes"; 
