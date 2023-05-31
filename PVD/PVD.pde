@@ -3,13 +3,13 @@
 // Name of file that is being encoded
 String imageName = "ducks.png";
 // Message to encode
-String textToEncode = "This is being encoded using PVD encoding thing";
+String textToEncode = "Steganography is the practice of representing information within another message or physical object, in such a manner that the presence of the information is not evident to human inspection.";
 // Name of file that has or will have encoded text
 String modImageName = "modifiedDucks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
 //DECODE: decoder mode, needs modImageName, prints text.
-char MODE = ENCODE;
+char MODE = DECODE;
 
 //GRAYSCALE: encode using grayscale pixel method
 //COLOR    : encode using colored pixel method
