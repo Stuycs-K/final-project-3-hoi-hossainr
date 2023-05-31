@@ -10,6 +10,8 @@
 | 5/24 | Finishing up pseudocode | |
 | 5/25 | Worked on grayscale decode | |
 | 5/27 | Finished decode, fixed some bugs | |
+| 5/29 | Created THM | |
+| 5/30 | Worked on color decode | | 
 
 ## Isaac Ho
 
