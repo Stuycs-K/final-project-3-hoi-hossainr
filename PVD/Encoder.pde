@@ -17,6 +17,7 @@ void textEncodeGrayscale(PImage orig, String msg){
   msgBits = messageBits.toArray();
   messageBits.clear();
   
+  orig.loadPixels();
   // Use grayscale filter on image, if it isn't already grayscaled
   orig.filter(GRAY);
   
@@ -24,14 +25,10 @@ void textEncodeGrayscale(PImage orig, String msg){
   for (int p=0; p<(orig.pixels).length-1; p+=2) {
     int pix1 = (orig.pixels[p])&255;
     int pix2 = (orig.pixels[p+1])&255;
-    // Determine the larger and smaller pixels.
-    if (pix1 >= pix2) {
-      large = pix1;
-      small = pix2;
-    } else {
-      large = pix2;
-      small = pix1;
-    }
+    // Determine the larger and smaller between the two pixels.
+    large = (pix1 >= pix2) ? pix1 : pix2;
+    small = (pix1 >= pix2) ? pix2 : pix1;
+    
     // Calculate difference and the block range.
     diff = large - small;
     for (int k=0; k<ranges.length; k++) {
@@ -95,13 +92,39 @@ void textEncodeColor(PImage orig, String msg){
   msgBits = messageBits.toArray();
   messageBits.clear();
   
-  // initialize values for red-green
+  orig.loadPixels();
   
-  // initialize values for green-blue
-  
+  // initialize values
+  int diff = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
+ 
   // go through every pixel
   for (int p=0; p<(orig.pixels).length; p++) {
-  
-  
+    // Initialize red, green, and blue values
+    int red = orig.pixels[p] >> 16 & 0xFF;
+    int green = orig.pixels[p] >> 8 & 0xFF;
+    int blue = orig.pixels[p] & 0xFF;
+    
+    // Start with red-green
+    large = (red >= green) ? red : green;
+    small = (red >= green) ? green : red;
+
+    diff = large - small;
+    for (int k=0; k<ranges.length; k++) {
+      if (ranges[k] > diff) {
+        blockRange = k-1;
+        break;
+      }
+    }
+    // Skip if red-green cannot properly encode.
+    if (((255 - large) < (ranges[blockRange+1] - ranges[blockRange]))
+       || (small < (ranges[blockRange+1] - ranges[blockRange]))) {
+      continue;
+    }
+    
+    // continue coding red-green
+    
+    // start green-blue
+    // if green-blue cannot encode then just encode the parts from red-green and continue;
+    
   }
 }
