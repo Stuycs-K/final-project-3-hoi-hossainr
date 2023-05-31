@@ -1,6 +1,10 @@
 # Image Steganography Project 
 
-Showcasing steganography methods to hide information inside images.  
+Showcasing steganography methods to hide information inside images.
+
+Group Name: 3.HoI.HossainR
+
+Names: Issac Ho, Rafayet Hossain
 
 [Presentation](PRESENTATION.md)
 
