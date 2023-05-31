@@ -1,6 +1,6 @@
-# Image Stenography Project 
+# Image Steganography Project 
 
-Showcasing stenography methods to hide information inside images.  
+Showcasing steganography methods to hide information inside images.  
 
 [Presentation](PRESENTATION.md)
 
