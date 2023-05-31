@@ -4,7 +4,7 @@ Showcasing steganography methods to hide information inside images.
 
 Group Name: 3.HoI.HossainR
 
-Names: Issac Ho, Rafayet Hossain
+Names: Isaac Ho, Rafayet Hossain
 
 [Presentation](PRESENTATION.md)
 
