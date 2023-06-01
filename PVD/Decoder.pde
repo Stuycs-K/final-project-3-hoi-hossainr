@@ -68,23 +68,23 @@ String textDecodeColor(PImage obs){
         break;
       }
     }
-    if (((255 - large) < (ranges[blockRange+1] - ranges[blockRange]))
-       || (small < (ranges[blockRange+1] - ranges[blockRange]))) {
-      continue;
-    }
-    for (int j=bitSize[blockRange]-1; j>=0; j--) {
-      curChar = (curChar<<1) | ((diff>>j)&1);
-      if (ccShift == 7) {
-        ccShift = 0;
-        if (curChar == 0) break pixiter;
-        text.append((char)curChar);
-        curChar = 0;
-      } else {ccShift++;}
+    if (((255 - large) >= (ranges[blockRange+1] - ranges[blockRange]))
+       && (small >= (ranges[blockRange+1] - ranges[blockRange]))) {
+      for (int j=bitSize[blockRange]-1; j>=0; j--) {
+        curChar = (curChar<<1) | ((diff>>j)&1);
+        if (ccShift == 7) {
+          println(curChar);
+          ccShift = 0;
+          if (curChar == 0) break pixiter;
+          text.append((char)curChar);
+          curChar = 0;
+        } else {ccShift++;}
+      }
     }
     
     // Get the large/small values for green-blue
     large = (blue >= green) ? blue : green;
-    small = (blue >= green) ? green : red;
+    small = (blue >= green) ? green : blue;
     
     diff = large - small;
     for (int k=0; k<ranges.length; k++) {
@@ -93,18 +93,18 @@ String textDecodeColor(PImage obs){
         break;
       }
     }
-    if (((255 - large) < (ranges[blockRange+1] - ranges[blockRange]))
-       || (small < (ranges[blockRange+1] - ranges[blockRange]))) {
-      continue;
-    }
-    for (int j=bitSize[blockRange]-1; j>=0; j--) {
-      curChar = (curChar<<1) | ((diff>>j)&1);
-      if (ccShift == 7) {
-        ccShift = 0;
-        if (curChar == 0) break pixiter;
-        text.append((char)curChar);
-        curChar = 0;
-      } else {ccShift++;}
+    if (((255 - large) >= (ranges[blockRange+1] - ranges[blockRange]))
+       && (small >= (ranges[blockRange+1] - ranges[blockRange]))) {
+      for (int j=bitSize[blockRange]-1; j>=0; j--) {
+        curChar = (curChar<<1) | ((diff>>j)&1);
+        if (ccShift == 7) {
+          println(curChar);
+          ccShift = 0;
+          if (curChar == 0) break pixiter;
+          text.append((char)curChar);
+          curChar = 0;
+        } else {ccShift++;}
+      }
     }
     
   }
