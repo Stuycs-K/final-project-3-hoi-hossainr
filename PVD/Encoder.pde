@@ -85,7 +85,6 @@ void textEncodeColor(PImage orig, String msg){
   float m = 0;
   IntList messageBits = new IntList();  
   int[] msgBits;
-  char overlap = 0;
   
   for (int i=0; i<msg.length(); i++) {
     for (int j=7; j>=0; j--) {
@@ -116,9 +115,10 @@ void textEncodeColor(PImage orig, String msg){
         break;
       }
     }
-    // Skip if red-green cannot properly encode.
+
     if (((255 - large) >= (ranges[blockRange+1] - ranges[blockRange]))
        && (small >= (ranges[blockRange+1] - ranges[blockRange]))) {
+
       // continue coding red-green
       newDiff = ranges[blockRange];
       for (int ls=bitSize[blockRange]-1; ls>=0; ls--) {
@@ -159,9 +159,10 @@ void textEncodeColor(PImage orig, String msg){
         break;
       }
     }
-    // if green-blue cannot encode then just encode the parts from red-green and continue;
+
     if (((255 - large) >= (ranges[blockRange+1] - ranges[blockRange]))
        && (small >= (ranges[blockRange+1] - ranges[blockRange]))) {
+
       //continue encoding green-blue
       newDiff = ranges[blockRange];
       for (int ls=bitSize[blockRange]-1; ls>=0; ls--) {
@@ -192,6 +193,8 @@ void textEncodeColor(PImage orig, String msg){
     }
     
     //combine RG and GB blocks, then encode
+    
     orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + (((newGreen1+newGreen2)/2) + diffGB);
   }
+  
 }
