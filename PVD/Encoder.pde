@@ -1,4 +1,3 @@
-
 void textEncodeGrayscale(PImage orig, String msg){
   // Initialize variables
   int diff = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
@@ -81,8 +80,12 @@ void textEncodeGrayscale(PImage orig, String msg){
 void textEncodeColor(PImage orig, String msg){
   //color version has overlapping blocks in the color channels, instead of neighboring pixels
   //1 block in RG, 1 block GB
+    // initialize values
+  int newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
+  float m = 0;
   IntList messageBits = new IntList();  
   int[] msgBits;
+  char overlap = 0;
   
   for (int i=0; i<msg.length(); i++) {
     for (int j=7; j>=0; j--) {
@@ -93,38 +96,98 @@ void textEncodeColor(PImage orig, String msg){
   messageBits.clear();
   
   orig.loadPixels();
-  
-  // initialize values
-  int diff = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
  
   // go through every pixel
   for (int p=0; p<(orig.pixels).length; p++) {
     // Initialize red, green, and blue values
-    int red = orig.pixels[p] >> 16 & 0xFF;
-    int green = orig.pixels[p] >> 8 & 0xFF;
-    int blue = orig.pixels[p] & 0xFF;
+    int origRed = orig.pixels[p] >> 16 & 0xFF;
+    int origGreen = orig.pixels[p] >> 8 & 0xFF;
+    int origBlue = orig.pixels[p] & 0xFF;
+    int avgGreen = 0, diffRG = 0, diffGB = 0;
     
     // Start with red-green
-    large = (red >= green) ? red : green;
-    small = (red >= green) ? green : red;
+    large = (origRed >= origGreen) ? origRed : origGreen;
+    small = (origRed >= origGreen) ? origGreen : origRed;
 
-    diff = large - small;
+    diffRG = large - small;
     for (int k=0; k<ranges.length; k++) {
-      if (ranges[k] > diff) {
+      if (ranges[k] > diffRG) {
         blockRange = k-1;
         break;
       }
     }
     // Skip if red-green cannot properly encode.
-    if (((255 - large) < (ranges[blockRange+1] - ranges[blockRange]))
-       || (small < (ranges[blockRange+1] - ranges[blockRange]))) {
-      continue;
+    if (((255 - large) >= (ranges[blockRange+1] - ranges[blockRange]))
+       && (small >= (ranges[blockRange+1] - ranges[blockRange]))) {
+      // continue coding red-green
+      newDiff = ranges[blockRange];
+      for (int ls=bitSize[blockRange]-1; ls>=0; ls--) {
+        // Sets bit in location ls to zero
+        newDiff &= ~(1 << ls);
+        // Replace bit with message bits if there are any left to encode
+        if (msgInd < msgBits.length) {
+          newDiff |= ((msgBits[msgInd] << ls) & (1 << ls) );
+          msgInd++;
+        }
+      }
+      
+      m = float(abs(newDiff - diffRG));
+      if ((origRed >= origGreen) && (newDiff > diffRG)) {
+        avgGreen = origGreen - int(floor(m/2.0));
+      } else if ((origRed < origGreen) && (newDiff > diffRG)) {
+        avgGreen = origGreen + int(ceil(m/2.0));
+      } else if ((origRed >= origGreen) && (newDiff <= diffRG)) {
+        avgGreen = origGreen + int(floor(m/2.0));
+      } else if ((origRed < origGreen) && (newDiff <= diffRG)) {
+        avgGreen = origGreen - int(floor(m/2.0));
+      }
+      diffRG = int(m);
+      overlap = OVERLAP;
     }
     
-    // continue coding red-green
-    
     // start green-blue
-    // if green-blue cannot encode then just encode the parts from red-green and continue;
+    large = (origGreen >= origBlue) ? origGreen : origBlue;
+    small = (origGreen >= origBlue) ? origBlue : origGreen;
     
+    diffGB = large - small;
+    for (int k=0; k<ranges.length; k++) {
+      if (ranges[k] > diffGB) {
+        blockRange = k-1;
+        break;
+      }
+    }
+    // if green-blue cannot encode then just encode the parts from red-green and continue;
+    if (((255 - large) >= (ranges[blockRange+1] - ranges[blockRange]))
+       && (small >= (ranges[blockRange+1] - ranges[blockRange]))) {
+      //continue encoding green-blue
+      newDiff = ranges[blockRange];
+      for (int ls=bitSize[blockRange]-1; ls>=0; ls--) {
+        //Sets bit in location ls to zero
+        newDiff &= ~(1 << ls);
+        //Replace bit with message bits if there are any left to encode
+        if (msgInd < msgBits.length) {
+          newDiff |= ((msgBits[msgInd] << ls) & (1 << ls) );
+          msgInd++;
+        }
+      }
+      
+      m = float(abs(newDiff - diffGB));
+      if ((origGreen >= origBlue) && (newDiff > diffGB)) {
+        avgGreen += origGreen + int(ceil(m/2.0));
+      } else if ((origGreen < origBlue) && (newDiff > diffGB)) {
+        avgGreen += origGreen - int(floor(m/2.0));
+      } else if ((origGreen >= origBlue) && (newDiff <= diffGB)) {
+        avgGreen += origGreen - int(ceil(m/2.0));
+      } else if ((origGreen < origBlue) && (newDiff <= diffGB)) {
+        avgGreen += origGreen + int(ceil(m/2.0));
+      }
+      diffGB = int(m);
+    }
+    
+    //combine RG and GB blocks, then encode
+    if (overlap == OVERLAP) {
+      avgGreen /= 2;
+    }
+    orig.pixels[p] = (0xFF << 24) + ((avgGreen - diffRG) << 16) + (avgGreen << 8) + (avgGreen - diffGB);
   }
 }

@@ -9,3 +9,4 @@ public static char ENCODE = 0;
 public static char DECODE = 1;
 public static char GRAYSCALE = 0;
 public static char COLOR = 1;
+public static char OVERLAP = 1;
