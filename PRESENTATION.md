@@ -1,5 +1,20 @@
 # Presentation
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 general info about stego image types (lsb)
 
 general info about pvd
