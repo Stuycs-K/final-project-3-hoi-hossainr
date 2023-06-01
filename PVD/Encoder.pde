@@ -81,7 +81,7 @@ void textEncodeColor(PImage orig, String msg){
   //color version has overlapping blocks in the color channels, instead of neighboring pixels
   //1 block in RG, 1 block GB
     // initialize values
-  int newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
+  int diffRG = 0, diffGB = 0, newDiff = 0, large = 0, small = 0, msgInd = 0, blockRange = 0;
   float m = 0;
   IntList messageBits = new IntList();  
   int[] msgBits;
@@ -103,7 +103,7 @@ void textEncodeColor(PImage orig, String msg){
     int origRed = orig.pixels[p] >> 16 & 0xFF;
     int origGreen = orig.pixels[p] >> 8 & 0xFF;
     int origBlue = orig.pixels[p] & 0xFF;
-    int avgGreen = 0, diffRG = 0, diffGB = 0;
+    int newRed = origRed, newGreen1 = origGreen, newGreen2 = origGreen, newBlue = origBlue;
     
     // Start with red-green
     large = (origRed >= origGreen) ? origRed : origGreen;
@@ -133,16 +133,19 @@ void textEncodeColor(PImage orig, String msg){
       
       m = float(abs(newDiff - diffRG));
       if ((origRed >= origGreen) && (newDiff > diffRG)) {
-        avgGreen = origGreen - int(floor(m/2.0));
+        newRed += int(ceil(m/2.0));
+        newGreen1 -= int(floor(m/2.0));
       } else if ((origRed < origGreen) && (newDiff > diffRG)) {
-        avgGreen = origGreen + int(ceil(m/2.0));
+        newRed -= int(floor(m/2.0));
+        newGreen1 += int(ceil(m/2.0));
       } else if ((origRed >= origGreen) && (newDiff <= diffRG)) {
-        avgGreen = origGreen + int(floor(m/2.0));
+        newRed -= int(ceil(m/2.0));
+        newGreen1 += int(floor(m/2.0));
       } else if ((origRed < origGreen) && (newDiff <= diffRG)) {
-        avgGreen = origGreen - int(floor(m/2.0));
+        newRed += int(ceil(m/2.0));
+        newGreen1 -= int(floor(m/2.0));
       }
-      diffRG = int(m);
-      overlap = OVERLAP;
+      diffRG = newGreen1 - newRed;
     }
     
     // start green-blue
@@ -173,21 +176,22 @@ void textEncodeColor(PImage orig, String msg){
       
       m = float(abs(newDiff - diffGB));
       if ((origGreen >= origBlue) && (newDiff > diffGB)) {
-        avgGreen += origGreen + int(ceil(m/2.0));
+        newGreen2 += int(ceil(m/2.0));
+        newBlue -= int(floor(m/2.0));
       } else if ((origGreen < origBlue) && (newDiff > diffGB)) {
-        avgGreen += origGreen - int(floor(m/2.0));
+        newGreen2 -= int(floor(m/2.0));
+        newBlue += int(ceil(m/2.0));
       } else if ((origGreen >= origBlue) && (newDiff <= diffGB)) {
-        avgGreen += origGreen - int(ceil(m/2.0));
+        newGreen2 -= int(ceil(m/2.0));
+        newBlue += int(floor(m/2.0));
       } else if ((origGreen < origBlue) && (newDiff <= diffGB)) {
-        avgGreen += origGreen + int(ceil(m/2.0));
+        newGreen2 += int(ceil(m/2.0));
+        newBlue -= int(floor(m/2.0));
       }
-      diffGB = int(m);
+      diffGB = newBlue - newGreen2;
     }
     
     //combine RG and GB blocks, then encode
-    if (overlap == OVERLAP) {
-      avgGreen /= 2;
-    }
-    orig.pixels[p] = (0xFF << 24) + ((avgGreen - diffRG) << 16) + (avgGreen << 8) + (avgGreen - diffGB);
+    orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + (((newGreen1+newGreen2)/2) + diffGB);
   }
 }
