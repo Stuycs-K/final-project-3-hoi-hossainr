@@ -1,7 +1,7 @@
 // Encoding and Decoding text onto image using PVD
 
 // Name of file that is being encoded
-String imageName = "plane.png";
+String imageName = "ducks.png";
 // Message to encode
 String textToEncode = "Steganography is the practice of representing information within another message or physical object, in such a manner that the presence of the information is not evident to human inspection.";
 // Name of file that has or will have encoded text

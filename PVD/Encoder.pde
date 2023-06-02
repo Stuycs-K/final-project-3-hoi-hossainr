@@ -121,7 +121,7 @@ void textEncodeColor(PImage orig, String msg){
         break;
       }
     }
-
+    
     if (((255 - large) >= (ranges[blockRange+1] - ranges[blockRange]))
        && (small >= (ranges[blockRange+1] - ranges[blockRange]))) {
 
@@ -204,24 +204,16 @@ void textEncodeColor(PImage orig, String msg){
       ogb = false;
     }
     
-    //combine RG and GB blocks, then encode
-    //println(red(orig.pixels[p]) + " " + green(orig.pixels[p]) + " " + blue(orig.pixels[p]));
-    //println(newBlue + " " + ((((newGreen1+newGreen2)/2) - diffGB)) );
-    //println(newRed + " " + ((((newGreen1+newGreen2)/2) - diffRG) ));
+    //encode new values into pixel
     if (ogb && org){
       orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + (((newGreen1+newGreen2)/2) + diffGB);
     } else if (ogb){
-      println(newBlue + " " + ((((newGreen1+newGreen2)/2) - diffGB))  + " " + diffGB);
-      println(newRed + " " + ((((newGreen1+newGreen2)/2) - diffRG) ) + " " + diffRG);
-      println(red(orig.pixels[p]) + " " + green(orig.pixels[p]) + " " + blue(orig.pixels[p]));
-     
+      // if overlap occurs, only change the encodable blocks
       orig.pixels[p] = (0xFF << 24) + (origRed << 16) + (((newGreen1+newGreen2)/2) << 8) + ((((newGreen1+newGreen2)/2) - diffGB));
-      println(red(orig.pixels[p]) + " " + green(orig.pixels[p]) + " " + blue(orig.pixels[p]));
-
-    }else if (org){
+    } else if (org){
       orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + origBlue;
     }
 
-}
-  
+  }
+  orig.updatePixels();
 }
