@@ -1,8 +1,10 @@
 # Pixel Value Differencing (PVD) Steganography Presentation
 
-### Least significant bit (LSB) steganography
+## Least significant bit (LSB) steganography
 Lab05 was based on LSB:
+
 Set number of bits encoded in the smallest bits of a pixel or color channel.
+
 In the lab, encoded smallest 2 bits of green value in pixels where red and blue values both had last 3 bits as `000`
 
 However there are probles when only LSB is used
@@ -13,26 +15,58 @@ newmodifiedCat from website |  Area found by stegsolve
 :-------------------------:|:-------------------------:
 ![](imgs/newmodifiedCat.png)  |  ![](imgs/modStego.png)  
 
-### PVD steganography
-Instead of just changing the pixel values directly, we take the difference of two values and encode data into that instead
-Uses the same principle of encoding data in least significant bits, but with a variable amount of bits encoded in each pixel or color channel
+## PVD steganography
+Instead of just changing the pixel values directly, we take the difference of two values and encode data into that instead.
+
+For this example we used grayscale images, as each pixel is only one byte in value (RGB values are the same)
+
+If we want to hide a message, we have to go through every two pixels inside a image.
+1. Take the difference of the two pixels
+2. Encode bits of the message into the difference (If none are left, encode zeroes)
+3. Adjust the new pixel values using the new difference
+
+This graph encodes bits 001 into two pixels
+@ | 1st Value | 2nd Value | Difference
+:--:|:--:|:--:|:--:
+Before | 120 | 150 | 30 (11110) 
+After  | 122 | 153 | 25 (11001)
+
+### Encoding more bits
+Two bits per block is too little, we can cram more bits without affecting the color too much.
+
+Depending on how big the difference is, we can encode more bits into the difference.
 - "Smooth" areas with little differences between values are easier to detect with the naked eye, and so are encoded with less data
-- "Rough" areas with greater differences between values are easier to detect with the naked eye, and so are encoded with more data
+- "Rough" areas with greater differences between values are harder to detect with the naked eye, and so are encoded with more data
 - This allows more data to be encoded without raising suspicion
 
-![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Anas_platyrhynchos_male_female_quadrat.jpg/330px-Anas_platyrhynchos_male_female_quadrat.jpg "ducks")
+The amount of bits per difference is based on its range (lower,upper).
+Index | Lower | Upper | Bits | Binary
+:--:|:--:|:--:|:--:|:--:
+0 | 0 | 7 | 3 | 00000xxx
+1 | 8 | 15 | 3 | 00001xxx
+2 | 16 | 31 | 4 | 0001xxxx
+3 | 32 | 63 | 5 | 001xxxxx
+4 | 64 | 127 | 6 | 01xxxxxx
+5 | 128 | 255 | 7 | 1xxxxxxx
 
-PVD without overlap:
-- Image is split into blocks of two each
-  - We implemented this with individual pixels grayscale images
-  - For a color image, could use diffrences between pixels on a single channel or multiple
-  - Or alternatively diffrences between 2 channels on single pixels
-- Based on the difference between values in the block, the number of encoded bits is determined
+Using previous example, the difference of 30 is between 16-31, so we can encode 4 bits (0010).
+@ | 1st Value | 2nd Value | Difference
+:--:|:--:|:--:|:--:
+Before | 120 | 150 | 30 (11110) 
+After  | 126 | 158 | 18 (10010)
 
-![alt text](imgs/rsos161066f02.jpg "Flowchart of PVD")
-- Possibility of over/underflow is also checked
-- Once the message is fully encoded, encode 0s in the remaining pixels
+Before | After
+:--:|:--:
+![](https://placehold.co/15x15/787878/787878.png) | ![](https://placehold.co/15x15/7E7E7E/7E7E7E.png)
+![](https://placehold.co/15x15/969696/969696.png) | ![](https://placehold.co/15x15/9E9E9E/9E9E9E.png)
 
+### What about color images?
+Color images are more flexible for how to encode images onto them, as there are three values on each pixel (alpha is useless to us)
+
+
+
+
+### Buffer below 
 PVD with overlapping blocks:
 - Color version is more flexible
 - The other method we implemented, using 1 pixel and all 3 colors
