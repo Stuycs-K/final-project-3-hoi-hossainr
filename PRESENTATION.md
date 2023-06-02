@@ -15,21 +15,6 @@ newmodifiedCat from website |  Area found by stegsolve
 
 ### PVD steganography
 Instead of just changing the pixel values directly, we take the difference of two values and encode data into that instead
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Uses the same principle of encoding data in least significant bits, but with a variable amount of bits encoded in each pixel or color channel
 - "Smooth" areas with little differences between values are easier to detect with the naked eye, and so are encoded with less data
 - "Rough" areas with greater differences between values are easier to detect with the naked eye, and so are encoded with more data
@@ -52,6 +37,8 @@ PVD with overlapping blocks:
 - Essentially, individual pixels make up 2 blocks in this version: red-green and green-blue
   - These green values from each block are then averaged
   - The red and blue values are also adjusted to be the same distance from green as before averaging
+
+![alt text](https://royalsocietypublishing.org/cms/asset/df9fd638-e59b-4e3b-92ed-d30558a017e2/rsos161066f04.jpg "Flowchart of color PVD with overlapping")
 - Overlapping blocks allows for maintained information density and efficiency with encoding
 - Also, color images are less conspicuous than grayscale images when being sent, so the purpose of steganography is still fulfilled
 
