@@ -60,22 +60,38 @@ Before | After
 ![](https://placehold.co/15x15/787878/787878.png) | ![](https://placehold.co/15x15/7E7E7E/7E7E7E.png)
 ![](https://placehold.co/15x15/969696/969696.png) | ![](https://placehold.co/15x15/9E9E9E/9E9E9E.png)
 
+### Overflow and underflow
+
 ### What about color images?
 Color images are more flexible for how to encode images onto them, as there are three values on each pixel (alpha is useless to us)
 
+One method of encoding is the exact same as the grayscale method, but encode only one color (either red, green, or blue)
+* This is lazy and doesn't make use of the other two bytes of data we can use to encode.
 
+Another method is going through each pixel and using PVD on two colors of a pixel (red-green, red-blue, etc..)
+* Better but there is still one byte of data that is left out. 
 
+The third method uses all 3 colors in one pixel to encode data, which is the one we are going to use.
 
-# Buffer below dont look
-PVD with overlapping blocks:
-- Color version is more flexible
-- The other method we implemented, using 1 pixel and all 3 colors
-- Essentially, individual pixels make up 2 blocks in this version: red-green and green-blue
-  - These green values from each block are then averaged
-  - The red and blue values are also adjusted to be the same distance from green as before averaging
+In this method, since we have only 3 colors, we have to use overlapping blocks, which means using PVD twice with only three colors.
 
-![alt text](imgs/rsos161066f04.jpg "Flowchart of color PVD with overlapping")
-- Overlapping blocks allows for maintained information density and efficiency with encoding
-- Also, color images are less conspicuous than grayscale images when being sent, so the purpose of steganography is still fulfilled
+For every pixel:
+1. Find the difference of red and green, then encode data onto it.
+2. Calculate the new red* and green value from the new difference.
+3. Find the difference of green and blue, then encode data.
+4. Calculate the new green and blue* value from the new difference.
 
-- ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `#1589F0`
+The red and blue values we calculated so far can only be used if encoding one of the colors causes an over/underflow.
+* For example, if we have color(50,210,250), the max difference of green-blue can overflow on green, so it is skipped.
+* Instead we only encode the values of red-green for this pixel.
+
+However most of the pixels will have both differences with encoded data, so we need to find new red, green, and blue values to fit the differences.
+
+* We did this by calculating the average of the two green values to get our new green value.
+* Subtract the new green value with the red-green difference for the new red value.
+* Subtract the new green value with the green-blue difference for the new blue value.
+
+<img src="imgs/rsos161066f04.jpg" width="640">
+
+Overlapping blocks allows for maintained information density and efficiency with encoding. Also, color images are less conspicuous than grayscale images when being sent, so the purpose of steganography is still fulfilled
+
