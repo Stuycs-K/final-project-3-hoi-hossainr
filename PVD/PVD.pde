@@ -5,7 +5,7 @@ String imageName = "plane.png";
 // Message to encode
 String textToEncode = "Steganography is the practice of representing information within another message or physical object, in such a manner that the presence of the information is not evident to human inspection.";
 // Name of file that has or will have encoded text
-String modImageName = "modifiedPlane.png";
+String modImageName = "modifiedDucks.png";
 
 //ENCODE: encoder mode, needs imageName, textToEncode, and modImageName for saving
 //DECODE: decoder mode, needs modImageName, prints text.

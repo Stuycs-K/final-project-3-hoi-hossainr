@@ -104,6 +104,12 @@ void textEncodeColor(PImage orig, String msg){
     int origBlue = orig.pixels[p] & 0xFF;
     int newRed = origRed, newGreen1 = origGreen, newGreen2 = origGreen, newBlue = origBlue;
     
+    // ((((newGreen1+newGreen2)/2) - diffRG) << 16)
+    boolean org = true;
+    boolean ogb = true;
+    
+
+    
     // Start with red-green
     large = (origRed >= origGreen) ? origRed : origGreen;
     small = (origRed >= origGreen) ? origGreen : origRed;
@@ -146,8 +152,11 @@ void textEncodeColor(PImage orig, String msg){
         newGreen1 -= int(floor(m/2.0));
       }
       diffRG = newGreen1 - newRed;
+    } else {
+      diffRG = 0;
+      org = false;
     }
-    
+
     // start green-blue
     large = (origGreen >= origBlue) ? origGreen : origBlue;
     small = (origGreen >= origBlue) ? origBlue : origGreen;
@@ -190,11 +199,29 @@ void textEncodeColor(PImage orig, String msg){
         newBlue -= int(floor(m/2.0));
       }
       diffGB = newBlue - newGreen2;
+    } else {
+      diffGB = 0;
+      ogb = false;
     }
     
     //combine RG and GB blocks, then encode
-    
-    orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + (((newGreen1+newGreen2)/2) + diffGB);
-  }
+    //println(red(orig.pixels[p]) + " " + green(orig.pixels[p]) + " " + blue(orig.pixels[p]));
+    //println(newBlue + " " + ((((newGreen1+newGreen2)/2) - diffGB)) );
+    //println(newRed + " " + ((((newGreen1+newGreen2)/2) - diffRG) ));
+    if (ogb && org){
+      orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + (((newGreen1+newGreen2)/2) + diffGB);
+    } else if (ogb){
+      println(newBlue + " " + ((((newGreen1+newGreen2)/2) - diffGB))  + " " + diffGB);
+      println(newRed + " " + ((((newGreen1+newGreen2)/2) - diffRG) ) + " " + diffRG);
+      println(red(orig.pixels[p]) + " " + green(orig.pixels[p]) + " " + blue(orig.pixels[p]));
+     
+      orig.pixels[p] = (0xFF << 24) + (origRed << 16) + (((newGreen1+newGreen2)/2) << 8) + ((((newGreen1+newGreen2)/2) - diffGB));
+      println(red(orig.pixels[p]) + " " + green(orig.pixels[p]) + " " + blue(orig.pixels[p]));
+
+    }else if (org){
+      orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + origBlue;
+    }
+
+}
   
 }
