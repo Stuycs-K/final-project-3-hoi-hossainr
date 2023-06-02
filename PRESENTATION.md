@@ -66,7 +66,7 @@ Color images are more flexible for how to encode images onto them, as there are 
 
 
 
-### Buffer below dont look
+# Buffer below dont look
 PVD with overlapping blocks:
 - Color version is more flexible
 - The other method we implemented, using 1 pixel and all 3 colors
