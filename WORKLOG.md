@@ -24,3 +24,4 @@
 | 5/25 | Worked on grayscale encode | |
 | 5/27 | Fixed bugs in encode | |
 | 6/1 | Worked on color encode | |
+| 6/1 | Made Markdown presentation | |
