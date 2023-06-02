@@ -28,6 +28,8 @@ PVD without overlap:
   - For a color image, could use diffrences between pixels on a single channel or multiple
   - Or alternatively diffrences between 2 channels on single pixels
 - Based on the difference between values in the block, the number of encoded bits is determined
+
+![alt text](imgs/rsos161066f02.jpg "Flowchart of PVD")
 - Possibility of over/underflow is also checked
 - Once the message is fully encoded, encode 0s in the remaining pixels
 
@@ -38,7 +40,7 @@ PVD with overlapping blocks:
   - These green values from each block are then averaged
   - The red and blue values are also adjusted to be the same distance from green as before averaging
 
-![alt text](https://royalsocietypublishing.org/cms/asset/df9fd638-e59b-4e3b-92ed-d30558a017e2/rsos161066f04.jpg "Flowchart of color PVD with overlapping")
+![alt text](imgs/rsos161066f04.jpg "Flowchart of color PVD with overlapping")
 - Overlapping blocks allows for maintained information density and efficiency with encoding
 - Also, color images are less conspicuous than grayscale images when being sent, so the purpose of steganography is still fulfilled
 
