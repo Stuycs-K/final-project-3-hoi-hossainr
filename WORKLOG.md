@@ -12,6 +12,7 @@
 | 5/27 | Finished decode, fixed some bugs | |
 | 5/29 | Created THM | |
 | 5/30 | Worked on color decode | | 
+| 6/1 | Worked on presentation | |
 
 ## Isaac Ho
 
