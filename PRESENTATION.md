@@ -61,6 +61,8 @@ Before | After
 ![](https://placehold.co/15x15/969696/969696.png) | ![](https://placehold.co/15x15/9E9E9E/9E9E9E.png)
 
 ### Overflow and underflow
+Having values near 255 next to values near 0 would obviously be obvious and raise suspicion, so we want to avoid this with steganography.
+Therefore if the difference between 2 values in a block is greater than than the distance to 0 or 255, that block is skipped over with no data encoded.
 
 ### What about color images?
 Color images are more flexible for how to encode images onto them, as there are three values on each pixel (alpha is useless to us)
