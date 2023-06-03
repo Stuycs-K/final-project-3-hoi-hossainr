@@ -209,9 +209,9 @@ void textEncodeColor(PImage orig, String msg){
       orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + (((newGreen1+newGreen2)/2) + diffGB);
     } else if (ogb){
       // if overlap occurs, only change the encodable blocks
-      orig.pixels[p] = (0xFF << 24) + (origRed << 16) + (((newGreen1+newGreen2)/2) << 8) + ((((newGreen1+newGreen2)/2) - diffGB));
+      orig.pixels[p] = (0xFF << 24) + (origRed << 16) + (newGreen2 << 8) + (newBlue - diffGB);
     } else if (org){
-      orig.pixels[p] = (0xFF << 24) + ((((newGreen1+newGreen2)/2) - diffRG) << 16) + (((newGreen1+newGreen2)/2) << 8) + origBlue;
+      orig.pixels[p] = (0xFF << 24) + (newRed << 16) + (newGreen1 << 8) + origBlue;
     }
 
   }
