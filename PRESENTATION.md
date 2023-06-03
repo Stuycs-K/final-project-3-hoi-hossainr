@@ -61,18 +61,21 @@ Before | After
 ![](https://placehold.co/15x15/969696/969696.png) | ![](https://placehold.co/15x15/9E9E9E/9E9E9E.png)
 
 ### Overflow and underflow
+Some values may be too close to 0 or 255 but have large differences to each other. This can cause values to overflow or underflow.
 
 1st Value | 2nd Value | Diff
 :--:|:--:|:--:
 22 | 250 | 228
 
+If we encoded with bits of one to get the maximum possible difference of 255, this would result:
+
 1st Value | 2nd Value | Diff
 :--:|:--:|:--:
 10 | 263 | 255
 
-Having values near 255 next to values near 0 would obviously be obvious and raise suspicion, so we want to avoid this with steganography.
+Obviously a value of 263 is not possible, and will cause it to overflow, which can result in a different difference and color.
 
-Therefore if the difference between 2 values in a block is greater than than the distance to 0 or 255, that block is skipped over with no data encoded.
+To keep colors consistent, we decided to skip to the next two pixels if any of the values have a possibility of going outside the number range 0-255.
 
 ### What about color images?
 Color images are more flexible for how to encode images onto them, as there are three values on each pixel (alpha is useless to us)
