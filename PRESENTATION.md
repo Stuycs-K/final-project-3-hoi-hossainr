@@ -61,7 +61,17 @@ Before | After
 ![](https://placehold.co/15x15/969696/969696.png) | ![](https://placehold.co/15x15/9E9E9E/9E9E9E.png)
 
 ### Overflow and underflow
+
+1st Value | 2nd Value | Diff
+:--:|:--:|:--:
+22 | 250 | 228
+
+1st Value | 2nd Value | Diff
+:--:|:--:|:--:
+10 | 263 | 255
+
 Having values near 255 next to values near 0 would obviously be obvious and raise suspicion, so we want to avoid this with steganography.
+
 Therefore if the difference between 2 values in a block is greater than than the distance to 0 or 255, that block is skipped over with no data encoded.
 
 ### What about color images?
@@ -97,3 +107,24 @@ However most of the pixels will have both differences with encoded data, so we n
 
 Overlapping blocks allows for maintained information density and efficiency with encoding. Also, color images are less conspicuous than grayscale images when being sent, so the purpose of steganography is still fulfilled
 
+Ducks |  Ducks with PVD encoding
+:-------------------------:|:-------------------------:
+![](imgs/ducks.png)  |  ![](imgs/modifiedDucks.png)  
+
+### Decoding
+
+Decoding images with PVD is pretty easy when you know the algorithim.
+
+For grayscale images:
+1. Take the difference of two pixels
+2. Check if the value can cause overflow/underflow as described before.
+3. Find the amount of bits encoded into difference, then store the bits.
+   * We decided to store every 8 bits into a char value, then appending it into a string.
+4. Continue to next 2 pixels until there are no more pixels.
+   * Since we know we are decoding text, we can safely exit if the last eight bits are all zeroes, as it denotes a null character (end of string).
+
+For colored images, we use the same process except we go through every pixel instead. Remember to start with red+green first before green+blue.
+
+## Homework
+
+Will be provided on the Cybersecurity Group Sheet page.
