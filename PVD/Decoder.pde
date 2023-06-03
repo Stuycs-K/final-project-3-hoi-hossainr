@@ -28,7 +28,6 @@ String textDecodeGrayscale(PImage obs){
        || (small < (ranges[blockRange+1] - ranges[blockRange]))) {
       continue;
     }
-    println(diff + " " + pix1 + " " + pix2);
     // Using the block range, go through the amount of bits that are encoded in difference
     for (int j=bitSize[blockRange]-1; j>=0; j--) {
       // Place bit as first bit in character
