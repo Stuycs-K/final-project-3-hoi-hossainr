@@ -7,7 +7,7 @@ Set number of bits encoded in the smallest bits of a pixel or color channel.
 
 In the lab, encoded smallest 2 bits of green value in pixels where red and blue values both had last 3 bits as `000`
 
-However there are probles when only LSB is used
+However there are problems when only LSB is used
   - Inefficient in space, as it requires 4 pixels to encode a single byte
   - Can be trivially easy to detect, especially with tools such as stegsolve.
 
